@@ -4,9 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive; 
-
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 
 @Entity
@@ -14,12 +13,12 @@ public class Product {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
-	@NotNull(message = "Campo name não pode ser nulo")
+	@NotBlank(message = "Campo name não pode ser nulo")
 	private String name;
-	@NotNull (message = "Campo description não pode ser nulo")
+	@NotBlank(message = "Campo description não pode ser nulo")
 	private String description;
-	@Positive (message = "Campo price não pode ser negativo")
-	private double price; 
+	@Positive(message = "Campo price não pode ser negativo")
+	private Double price; 
 
 
 	public String getId() {
@@ -42,11 +41,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 
