@@ -22,14 +22,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.curso.product.domain.Product;
 import br.com.curso.product.service.ProductService;
-import br.com.curso.product.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/products")
 public class ProductControler {
 
-	@Autowired
-	private ProductRepository productRepository;
+
 
 	@Autowired
 	private ProductService service;
