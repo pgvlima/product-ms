@@ -49,11 +49,14 @@ public class ProductControler {
 	}
 
 	@GetMapping("/search")
-	public List<Product> search(@RequestParam(required = false) String q, @RequestParam(required = false) Double min_price, @RequestParam(required = false) Double max_price) {
+	public ResponseEntity<Object> search(@RequestParam(required = false) String q, @RequestParam(required = false) Double min_price, @RequestParam(required = false) Double max_price) {
 
-		List<Product> product = service.findByQuery(q, min_price, max_price); 
-		return product; 
-	}
+		if (!(q==null &&min_price==null && max_price==null)) {
+			return ResponseEntity.ok(service.findByQuery(q, min_price, max_price)); 
+		
+		}
+		return ResponseEntity.badRequest().build();
+		}
 
 	@PostMapping
 	@Transactional
