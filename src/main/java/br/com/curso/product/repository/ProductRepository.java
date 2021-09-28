@@ -11,6 +11,6 @@ import br.com.curso.product.domain.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String>{
 
-	@Query("SELECT prod FROM Product prod WHERE (:q is null or prod.name like %:q% or prod.description like %:q%) and (:min_price is null or prod.price>=:min_price) and (:max_price is null or prod.price<=:max_price)")
-	List<Product> findByQuery (String q, Double min_price, Double max_price);
+	@Query("SELECT prod FROM Product prod WHERE (:q is null or lower(prod.name) like '%'||lower(:q)||'%' or lower(prod.description) like  '%'||lower(:q)||'%') and (:minPrice is null or prod.price>=:minPrice) and (:maxPrice is null or prod.price<=:maxPrice)")
+	List<Product> findByQuery (String q, Double minPrice, Double maxPrice); 
 }
