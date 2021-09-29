@@ -3,14 +3,13 @@ package br.com.curso.product.service.impl;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
 
 import br.com.curso.product.domain.Product;
 import br.com.curso.product.repository.ProductRepository;
-import br.com.curso.product.service.ProductService; 
+import br.com.curso.product.service.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -28,9 +27,13 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public Product findId(String id) throws NoSuchElementException {
+	public Product findId(String id) throws NoSuchElementException  {
 		Optional<Product> product = productRepository.findById(id);	
-		return product.get();
+		if (product.isPresent()) {
+			return product.get();
+		}else {
+			  throw new NoSuchElementException();
+		}
 
 	}
 	
@@ -48,7 +51,6 @@ public class ProductServiceImpl implements ProductService{
 	public void delete(String id)  {
 		Product product = findId(id);
 		productRepository.delete(product);
-		
 	}
 
 	@Override

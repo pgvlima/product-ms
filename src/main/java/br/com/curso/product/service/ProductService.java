@@ -9,7 +9,7 @@ public interface ProductService {
 	
 	List<Product> findAll();
 	
-	Product findId(String id) throws NoSuchElementException;
+	Product findId(String id) throws NoSuchElementException ;
 	
 	List<Product> findByQuery(String q, Double minPrice, Double maxPrice);
 	

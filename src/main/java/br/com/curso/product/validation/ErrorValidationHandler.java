@@ -10,34 +10,32 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
 @RestControllerAdvice
 public class ErrorValidationHandler {
 	
+	
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ErrorValidationProduct handle(MethodArgumentNotValidException exception) {
+	public ErrorValidationProduct handleBadRequest(MethodArgumentNotValidException exception) {
 		return new ErrorValidationProduct(HttpStatus.BAD_REQUEST.value(),exception.getBindingResult().getFieldError().getDefaultMessage());
 	}
 	@ResponseStatus(code = HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NoSuchElementException.class)
-	public void handle(NoSuchElementException exception) {
+	public void handleNotFound(NoSuchElementException exception) {
 	}
 	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED) 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	public ErrorValidationProduct handle(HttpRequestMethodNotSupportedException exception) {
+	public ErrorValidationProduct handleNotAllowed(HttpRequestMethodNotSupportedException exception) {
 		return new ErrorValidationProduct(HttpStatus.METHOD_NOT_ALLOWED.value(),exception.getMessage());
 	}
-	
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(NullPointerException.class)
-	public ErrorValidationProduct handle(NullPointerException exception) {
+	public ErrorValidationProduct handleNullPointer(NullPointerException exception) {
 		return new ErrorValidationProduct(HttpStatus.INTERNAL_SERVER_ERROR.value(),exception.getMessage());
 	}
-	
+	@ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
-	public ErrorValidationProduct handle(Exception exception) {
+	public ErrorValidationProduct handleExeception(Exception exception) {
 		return new ErrorValidationProduct(HttpStatus.INTERNAL_SERVER_ERROR.value(),exception.getMessage());
 	}
-	
-
 }

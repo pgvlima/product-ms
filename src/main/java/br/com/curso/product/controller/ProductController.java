@@ -2,7 +2,6 @@ package br.com.curso.product.controller;
 
 import java.net.URI;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -43,7 +42,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ProductDto> findById(@PathVariable String id) throws NoSuchElementException {
+	public ResponseEntity<ProductDto> findById(@PathVariable String id) {
 		Product product = productService.findId(id);
 			return ResponseEntity.ok(modelMapper.map(product,ProductDto.class));  
 	}
