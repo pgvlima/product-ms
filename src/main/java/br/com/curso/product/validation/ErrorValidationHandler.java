@@ -1,14 +1,16 @@
 package br.com.curso.product.validation;
 
 
-import java.util.NoSuchElementException;
-
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import br.com.curso.product.exception.NotFoundException;
+
 
 @RestControllerAdvice
 public class ErrorValidationHandler {
@@ -19,10 +21,14 @@ public class ErrorValidationHandler {
 	public ErrorValidationProduct handleBadRequest(MethodArgumentNotValidException exception) {
 		return new ErrorValidationProduct(HttpStatus.BAD_REQUEST.value(),exception.getBindingResult().getFieldError().getDefaultMessage());
 	}
-	@ResponseStatus(code = HttpStatus.NOT_FOUND)
-	@ExceptionHandler(NoSuchElementException.class)
-	public void handleNotFound(NoSuchElementException exception) {
-	}
+
+	
+	  @ResponseStatus(code = HttpStatus.NOT_FOUND) 
+	  @ExceptionHandler(NotFoundException.class) 
+	  ResponseEntity<?> handleNotFound(NotFoundException e) { 
+		  return ResponseEntity.notFound().build(); 
+		  }
+	 
 	@ResponseStatus(code = HttpStatus.METHOD_NOT_ALLOWED) 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public ErrorValidationProduct handleNotAllowed(HttpRequestMethodNotSupportedException exception) {
@@ -38,4 +44,6 @@ public class ErrorValidationHandler {
 	public ErrorValidationProduct handleExeception(Exception exception) {
 		return new ErrorValidationProduct(HttpStatus.INTERNAL_SERVER_ERROR.value(),exception.getMessage());
 	}
+	
+	
 }
